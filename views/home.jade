@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  h1 Make your app great!
+  p.lead ToolsForDevs is an easy to use tool to monitor your apps.
+  hr
+  br
+  p.lead.text-center We are currently in beta (or even alpha), if you got invited please feel free to create an account and start tracking your app reviews without any charge, we are waiting for your feedback which will help us build great platform for mobile developers.
+  br
+  .row
+  div.col-md-5
+  div.col-md-2
+    a.btn.btn-success.center-block(href='/signup')
+            i.fa.fa-user-plus
+            | Signup now
+  br
+  br
+  br
+  .row
+    .col-sm-4
+      h2 
+        i.fa.fa-apple
+        | App Store
+      p ToolsForDevs is monitoring your app 24/7 and will inform you immediately about each new review that appears in the App Store.
+    .col-sm-4
+      h2 
+        i.fa.fa-android
+        | Google Play
+      p All Android app statistics available on live in one place!
+    .col-sm-4
+      h2 
+        i.fa.fa-shopping-cart
+        | Other stores
+      p Coming soon, stay tuned! 
+        i.fa.fa-smile-o

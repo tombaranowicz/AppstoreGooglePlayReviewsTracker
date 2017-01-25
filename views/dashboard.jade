@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h1 #{title}
+  hr
+  a.btn.btn-primary(href='/add_app')
+      i.fa.fa-plus
+      | Start Tracking New App
+  .row
+    for app in applications
+      a(href='/app/#{app.id}/reviews')
+        .col-sm-6
+          .list-item
+            .row
+              .col-md-3
+                img.img-responsive(src='#{app.imageUrl}')
+              .col-md-9
+                h2 #{app.name}
+                p.text-primary #{app.sellerName}
+                if app.store=='AppStore'
+                  p.small.text-primary store: #{app.store} | country: #{app.country}
+                else
+                  p.small.text-primary store: #{app.store} | language: #{app.language}
+    else
+      .col-sm-12
+        h2 No apps tracked yet :( click above to start tracking new one 
+            i.fa.fa-arrow-up 
+          

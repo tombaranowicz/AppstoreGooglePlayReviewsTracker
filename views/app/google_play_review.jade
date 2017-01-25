@@ -1,0 +1,26 @@
+extends ../layout_no_header
+
+block content
+  br
+  .row
+    .col-md-3
+    .col-md-6
+      .row
+        .col-md-3
+          img.img-responsive(src='#{app.imageUrl}')
+        .col-md-9
+          h1
+            - for (var i = 0; i < review.rate; ++i) {
+              i.fa.fa-star
+            - }
+            - for (var i = review.rate; i < 5; ++i) {
+              i.fa.fa-star-o
+            - }
+          h2 #{review.title}
+          p.lead #{review.comment}
+          p by #{review.author} via Google Play
+          hr
+          .row
+            .col-md-6
+              a(href="https://play.google.com/store/apps/details?id=" + app.storeId)
+                img.img-responsive(src="/images/google_play.png")

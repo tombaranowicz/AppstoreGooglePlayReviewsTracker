@@ -1,0 +1,183 @@
+extends ../layout
+
+block content
+  br
+  .row
+    .col-md-2
+      img.img-responsive(src='#{app.imageUrl}')
+    .col-md-6
+      h2 #{app.name}
+      p #{app.sellerName}
+      if app.store=='AppStore'
+        p.small.text-primary store: #{app.store} | country: #{app.country}
+      else
+        p.small.text-primary store: #{app.store} | language: #{app.language}
+    .col-sm-4
+      a.btn.btn-danger(app_id=app.id data-toggle="modal" data-target="#confirm-delete")
+        i.fa.fa-power-off
+        | Stop Tracking App
+
+  br
+  .row
+    .col-sm-8.bs-component(id='reviews_table')
+      for review in reviews
+        .panel.panel-default
+          .panel-body
+            h4 #[a(target="_blank" href="/reviews/" + review._id) #{review.title}]
+            p
+              small #{review.comment}
+            p by #[a(target="_blank" href="https://www.google.pl/search?q=%22" + review.author + "%22+twitter+OR+facebook+OR+linkedin+OR+apple+OR+email") #{review.author}] for version #{review.version}
+            p
+              - for (var i = 0; i < review.rate; ++i) {
+                i.fa.fa-star
+              - }
+              - for (var i = review.rate; i < 5; ++i) {
+                i.fa.fa-star-o
+              - }
+    .col-sm-3
+      .panel.panel-default
+          .panel-body
+            div.row
+              .col-sm-6
+                p store: 
+              .col-sm-6
+                p.text-muted 
+                  small.pull-right #{app.store}
+            div.row
+              if app.store=='AppStore'
+                .col-sm-8
+                  p country: 
+                .col-sm-4
+                  p.text-muted 
+                    small.pull-right #{app.country}
+              else
+                .col-sm-8
+                  p language: 
+                .col-sm-4
+                  p.text-muted 
+                    small.pull-right #{app.language}
+            div.row
+              .col-sm-8
+                p current version: 
+              .col-sm-4
+                p.text-muted 
+                  small.pull-right #{app.version}
+            br
+            if app.store=='AppStore'
+              h4 Current version:
+              div.row
+                .col-sm-4
+                  p rating: 
+                .col-sm-8
+                  p.text-muted.pull-right
+                    - for (var i = 0; i < Math.floor(app.averageUserRatingForCurrentVersion); ++i) {
+                      i.fa.fa-star
+                    - }
+                    - for (var i = Math.floor(app.averageUserRatingForCurrentVersion); i < 5; ++i) {
+                      i.fa.fa-star-o
+                    - }
+              div.row
+                .col-sm-8
+                  p ratings count: 
+                .col-sm-4
+                  p.text-muted 
+                    small.pull-right #{app.userRatingCountForCurrentVersion}
+              br
+            h4 Overall:
+            if app.store=='AppStore'
+              div.row
+                .col-sm-4
+                  p rating: 
+                .col-sm-8
+                  p.text-muted.pull-right
+                    - for (var i = 0; i < Math.floor(app.averageUserRating); ++i) {
+                      i.fa.fa-star
+                    - }
+                    - for (var i = Math.floor(app.averageUserRating); i < 5; ++i) {
+                      i.fa.fa-star-o
+                    - }
+              div.row
+                .col-sm-8
+                  p ratings count: 
+                .col-sm-4
+                  p.text-muted 
+                    small.pull-right #{app.userRatingCount}
+            else
+              div.row
+                .col-sm-6
+                  p reviews: 
+                .col-sm-6
+                  p #{app.reviews}
+              div.row
+                .col-sm-6
+                  p score: 
+                .col-sm-6
+                  p #{app.score}
+              div.row
+                .col-sm-6
+                  p.text-muted
+                    - for (var i = 0; i < 5; ++i) {
+                      i.fa.fa-star
+                    - }
+                    - for (var i = 5; i < 5; ++i) {
+                      i.fa.fa-star-o
+                    - }
+                .col-sm-6
+                  p #{app.histogram_5}
+              div.row
+                .col-sm-6
+                  p.text-muted
+                    - for (var i = 0; i < 4; ++i) {
+                      i.fa.fa-star
+                    - }
+                    - for (var i = 4; i < 5; ++i) {
+                      i.fa.fa-star-o
+                    - }
+                .col-sm-6
+                  p #{app.histogram_4}
+              div.row
+                .col-sm-6
+                  p.text-muted
+                    - for (var i = 0; i < 3; ++i) {
+                      i.fa.fa-star
+                    - }
+                    - for (var i = 3; i < 5; ++i) {
+                      i.fa.fa-star-o
+                    - }
+                .col-sm-6
+                  p #{app.histogram_3}
+              div.row
+                .col-sm-6
+                  p.text-muted
+                    - for (var i = 0; i < 2; ++i) {
+                      i.fa.fa-star
+                    - }
+                    - for (var i = 2; i < 5; ++i) {
+                      i.fa.fa-star-o
+                    - }
+                .col-sm-6
+                  p #{app.histogram_2}
+              div.row
+                .col-sm-6
+                  p.text-muted
+                    - for (var i = 0; i < 1; ++i) {
+                      i.fa.fa-star
+                    - }
+                    - for (var i = 1; i < 5; ++i) {
+                      i.fa.fa-star-o
+                    - }
+                .col-sm-6
+                  p #{app.histogram_1}
+
+  #confirm-delete.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+          h4#myModalLabel.modal-title Confirm Remove
+        .modal-body
+          p You are going to remove this app from list of tracked apps, this procedure is irreversible and some of reviews might be lost.
+          p Do you want to proceed?
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Cancel
+          a.btn.btn-danger.btn-ok(onclick='deleteApp("#{app.id}")', data-dismiss='modal') Remove
